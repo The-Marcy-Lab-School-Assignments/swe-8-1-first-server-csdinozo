@@ -30,11 +30,15 @@ export const Joke = () => {
 	return (
 		<>
 			<h2>Joke</h2>
-			<p>{ joke.setup }</p>
-			<button onClick={ () => setOpen(!open) }>{open ? "Hide Answer" : "Show Answer"}</button>
-			<div style={ { maxHeight : open ? '500px' : '0px' } }>
-				<p>{ joke.punchline }</p>
-			</div>
+			{ joke ?
+				<>
+					<p>{ joke.setup }</p>
+					<button onClick={ () => setOpen(!open) }>{open ? "Hide Answer" : "Show Answer"}</button>
+					<div style={ { maxHeight: open ? '500px' : '0px', overflow: 'hidden' } }>
+						<p>{ joke.punchline }</p>
+					</div>
+				</>
+				: <p>Loading joke...</p>}
 		</>
 	)
 }
