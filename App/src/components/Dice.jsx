@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 export const Dice = () => {
-    const { quantity } = useParams();
+    const [searchParams] = useSearchParams();
+    const quantity = parseInt(searchParams.get('quantity')) || 1;
     const [rolls, setRolls] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchRolls = async () => {
             try {
-                const validQuantity = !isNaN(Number(quantity)) && Number(quantity) > 0 ? Number(quantity) : 1;
-
-                const response = await fetch(`/api/rollDice?quantity=${validQuantity}`);
+                const response = await fetch(`/api/rollDie?quantity=${quantity}`);
                 if (!response.ok) throw new Error('Failed to roll dice');
 
                 const data = await response.json();
@@ -33,7 +32,7 @@ export const Dice = () => {
         <>
             <h2>{Number(quantity) > 1 ? 'Dice Results' : 'Die Results'}</h2>
             <ul>
-                {rolls ? rolls.map((r, i) => <li key={i}>Roll {i + 1}: {r}</li>) : <p>Rolling...</p>}
+                {rolls ? rolls.map((r, i) => <li key={ i }>Roll { i + 1 }: { r }</li>) : <p>Rolling...</p>}
             </ul>
         </>
     );

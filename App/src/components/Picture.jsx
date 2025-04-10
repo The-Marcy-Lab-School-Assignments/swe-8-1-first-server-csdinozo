@@ -8,7 +8,7 @@ export const Picture = () => {
         const fetchImage = async () => {
             try {
                 const response = await fetch ('/api/picture');
-
+                
                 if (!response.ok) throw new Error('Failed to fetch picture');
 
                 const data = await response.json();
